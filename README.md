@@ -1,6 +1,6 @@
 # City Explorer
 
-**Author**: Sergii Otryshko
+**Author**: Sergii Otryshko & Pedro Perez
 **Version**: 1.0.0
 
 ## Overview
