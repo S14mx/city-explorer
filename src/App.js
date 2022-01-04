@@ -1,12 +1,33 @@
 import React from 'react';
 import './App.css';
-// import axios from 'axios';
+import SearchBar from './SearchBar';
+import Results from './Results'
+import Container from 'react-bootstrap/Container';
+import axios from 'axios';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      locationObj: []
+    }
+  }
+
+  getLocationObj = async (searchedCity) => {
+    const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${searchedCity}&format=json`;
+    const response = await axios.get(url);
+    this.setState({ locationObj: response.data });
+    console.log(this.state.locationObj)
+  }
+
+  
   render() {
     return (
-      <div className="App">
-      </div>
+      <Container className="App">
+        <SearchBar getLocationObj={this.getLocationObj}/>
+        {this.state.locationObj.length > 0 &&
+        <Results locationObj={this.state.locationObj}/>}
+      </Container>
     );
   }
 }
