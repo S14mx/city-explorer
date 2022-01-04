@@ -17,13 +17,16 @@ class App extends React.Component {
     const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${searchedCity}&format=json`;
     const response = await axios.get(url);
     this.setState({ locationObj: response.data });
-    console.log(this.state.locationObj)
   }
 
   
   render() {
+    const appStyle = {
+      minHeight: '100vh',
+      backgroundColor: 'ivory'
+    }
     return (
-      <Container className="App">
+      <Container style={appStyle} className="App">
         <SearchBar getLocationObj={this.getLocationObj}/>
         {this.state.locationObj.length > 0 &&
         <Results locationObj={this.state.locationObj}/>}

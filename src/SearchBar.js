@@ -21,7 +21,7 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <Container className="SearchBar">
+      <Container style={{ paddingTop: '5rem' }} className="SearchBar">
         <Form>
           <Form.Group className="mb-3" controlId="text">
             <Form.Label></Form.Label>
