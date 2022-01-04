@@ -19,7 +19,7 @@ class App extends React.Component {
     const response = await axios.get(url);
     this.setState({ locationObj: response.data });
     } catch(err) {
-    console.error(err);
+    console.error("The error code is:"+ err);
   }
   }
 
