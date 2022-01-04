@@ -9,23 +9,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchedCity: 'Seattle',
-      locationObj: {}
+      locationObj: []
     }
   }
 
-  
-
-  saveSearchedCity = (event) => {
-    this.setState({ searchedCity: event.target.value })
-    console.log('hi', event.target.value);
-  };
-
-  getLocationObj = async () => {
-    const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.searchedCity}&format=json`;
-    console.log(url)
+  getLocationObj = async (searchedCity) => {
+    const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${searchedCity}&format=json`;
     const response = await axios.get(url);
-    this.setState({ locationObj: response.data[0] });
+    this.setState({ locationObj: response.data });
     console.log(this.state.locationObj)
   }
 
@@ -33,8 +24,9 @@ class App extends React.Component {
   render() {
     return (
       <Container className="App">
-        <SearchBar saveSearchedCity={this.saveSearchedCity} getLocationObj={this.getLocationObj}/>
-        <Results />
+        <SearchBar getLocationObj={this.getLocationObj}/>
+        {this.state.locationObj.length > 0 &&
+        <Results locationObj={this.state.locationObj}/>}
       </Container>
     );
   }

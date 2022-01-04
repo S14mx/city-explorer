@@ -4,15 +4,29 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container';
 
 class SearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchedCity: ''
+    }
+  }
+
+  saveSearchedCity = (event) => {
+    this.setState({ searchedCity: event.target.value })
+  };
+
+  handleClick = () => {
+    this.props.getLocationObj(this.state.searchedCity)
+  }
+
   render() {
-    const { saveSearchedCity, getLocationObj } = this.props
     return (
       <Container className="SearchBar">
         <Form>
           <Form.Group className="mb-3" controlId="text">
             <Form.Label></Form.Label>
-            <Form.Control onChange={saveSearchedCity}size="lg" type="text" placeholder="Enter city name"></Form.Control>
-            <Button onClick={getLocationObj} variant="primary">Explore!</Button>
+            <Form.Control onChange={this.saveSearchedCity} size="lg" type="text" placeholder="Enter city name"></Form.Control>
+            <Button onClick={this.handleClick} variant="primary">Explore!</Button>
           </Form.Group>
         </Form>
       </Container>
