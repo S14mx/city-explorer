@@ -26,7 +26,7 @@ class SearchBar extends React.Component {
           <Form.Group className="mb-3" controlId="text">
             <Form.Label></Form.Label>
             <Form.Control onChange={this.saveSearchedCity} size="lg" type="text" placeholder="Enter city name"></Form.Control>
-            <Button onClick={this.handleClick} variant="primary">Explore!</Button>
+            <Button style={{margin: '2rem'}} onClick={this.handleClick} variant="primary">Explore!</Button>
           </Form.Group>
         </Form>
       </Container>

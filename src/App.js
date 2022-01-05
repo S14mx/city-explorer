@@ -30,17 +30,19 @@ class App extends React.Component {
   render() {
     const appStyle = {
       minHeight: '100vh',
+      minWidth: '100vw',
       backgroundColor: 'ivory'
     }
     const alertStyle = {
-      paddingTop: '3rem'
+      marginTop: '3rem'
     }
     return (
       <Container style={appStyle} className="App">
         <SearchBar getLocationObj={this.getLocationObj}/>
+        {this.state.error &&
         <Alert style={alertStyle} variant='warning'>
         {this.state.error}
-        </Alert>
+        </Alert>}
         {this.state.locationObj.length > 0 &&
         <Results locationObj={this.state.locationObj}/>}
       </Container>
