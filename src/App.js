@@ -11,7 +11,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       locationObj: [],
-      error: ""
+      error: ''
     } 
   }
 
@@ -20,8 +20,9 @@ class App extends React.Component {
     const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${searchedCity}&format=json`;
     const response = await axios.get(url);
     this.setState({ locationObj: response.data });
+    this.setState({ error: ''})
     } catch(err) {
-      this.setState({ error: err});
+      this.setState({ error: err.response.status + ': '+ err.response.data.error});
   }
   }
 
@@ -29,17 +30,19 @@ class App extends React.Component {
   render() {
     const appStyle = {
       minHeight: '100vh',
+      minWidth: '100vw',
       backgroundColor: 'ivory'
     }
     const alertStyle = {
-      paddingTop: '3rem'
+      marginTop: '3rem'
     }
     return (
       <Container style={appStyle} className="App">
         <SearchBar getLocationObj={this.getLocationObj}/>
-        <Alert style={alertStyle}>
-        {`${this.state.error}`}
-        </Alert>
+        {this.state.error &&
+        <Alert style={alertStyle} variant='warning'>
+        {this.state.error}
+        </Alert>}
         {this.state.locationObj.length > 0 &&
         <Results locationObj={this.state.locationObj}/>}
       </Container>
