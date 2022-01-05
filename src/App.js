@@ -3,14 +3,16 @@ import './App.css';
 import SearchBar from './SearchBar';
 import Results from './Results'
 import Container from 'react-bootstrap/Container';
+import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      locationObj: []
-    }
+      locationObj: [],
+      error: ""
+    } 
   }
 
   getLocationObj = async (searchedCity) => {
@@ -19,8 +21,7 @@ class App extends React.Component {
     const response = await axios.get(url);
     this.setState({ locationObj: response.data });
     } catch(err) {
-      window.alert(err);
-      console.error("RETURN =>"+ err);
+      this.setState({ error: err});
   }
   }
 
@@ -30,12 +31,20 @@ class App extends React.Component {
       minHeight: '100vh',
       backgroundColor: 'ivory'
     }
+    const alertStyle = {
+      paddingTop: '3rem'
+    }
     return (
       <Container style={appStyle} className="App">
         <SearchBar getLocationObj={this.getLocationObj}/>
+        <Alert style={alertStyle}>
+        {`${this.state.error}`}
+        </Alert>
         {this.state.locationObj.length > 0 &&
         <Results locationObj={this.state.locationObj}/>}
       </Container>
+
+
     );
   }
 }
