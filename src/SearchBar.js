@@ -12,7 +12,7 @@ class SearchBar extends React.Component {
   }
 
   saveSearchedCity = (event) => {
-    this.setState({ searchedCity: event.target.value })
+    this.setState({ searchedCity: event.target.value.toLowerCase() })
   };
 
   handleClick = async () => {
