@@ -15,8 +15,10 @@ class SearchBar extends React.Component {
     this.setState({ searchedCity: event.target.value })
   };
 
-  handleClick = () => {
-    this.props.getLocationObj(this.state.searchedCity)
+  handleClick = async () => {
+    this.props.clearWeatherObj()
+    await this.props.getLocationObj(this.state.searchedCity)
+    this.props.locationObj.forEach(obj => this.props.getForecastObj(obj, this.state.searchedCity))
   }
 
   render() {
@@ -26,7 +28,7 @@ class SearchBar extends React.Component {
           <Form.Group className="mb-3" controlId="text">
             <Form.Label></Form.Label>
             <Form.Control onChange={this.saveSearchedCity} size="lg" type="text" placeholder="Enter city name"></Form.Control>
-            <Button style={{margin: '2rem'}} onClick={this.handleClick} variant="primary">Explore!</Button>
+            <Button style={{ margin: '2rem' }} onClick={this.handleClick} variant="primary">Explore!</Button>
           </Form.Group>
         </Form>
       </Container>
