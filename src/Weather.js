@@ -9,8 +9,8 @@ class Weather extends React.Component {
 
     return (
       <Container style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }} className="Weather">
-        {filteredData.map(({ date, desc }) => (
-          <Card style={{ width: '10rem', margin: '1rem' }} key={date}>
+        {filteredData.map(({ date, desc }, idx) => (
+          <Card style={{ width: '10rem', margin: '5rem 1rem 0rem 1rem' }} key={idx}>
             <Card.Body>
               <Card.Title>{date}</Card.Title>
               <Card.Text>{desc}</Card.Text>
