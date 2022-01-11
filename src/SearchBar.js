@@ -19,6 +19,7 @@ class SearchBar extends React.Component {
     this.props.clearWeatherObj()
     await this.props.getLocationObj(this.state.searchedCity)
     this.props.locationObj.forEach(obj => this.props.getForecastObj(obj, this.state.searchedCity))
+    this.props.getMoviesObj(this.state.searchedCity)
   }
 
   render() {
