@@ -37,7 +37,7 @@ class App extends React.Component {
   getForecastObj = async (locationObj, searchedCity) => {
     try {
       this.setState({ loading: { ...this.state.loading, forecast: true } });
-      const url = `http://localhost:3001/weather?lat=${locationObj.lat}&lon=${locationObj.lon}&searchQuery=${searchedCity}`;
+      const url = `${process.env.REACT_APP_SERVER_URL}/weather?lat=${locationObj.lat}&lon=${locationObj.lon}&searchQuery=${searchedCity}`;
       const response = await axios.get(url);
       this.setState({ weatherObj: [...this.state.weatherObj, ...response.data], loading: { ...this.state.loading, forecast: false } });
       // this.setState({ error: '' })
@@ -49,7 +49,7 @@ class App extends React.Component {
   getMoviesObj = async (searchedCity) => {
     try {
       this.setState({ loading: { ...this.state.loading, movies: true } });
-      const url = `http://localhost:3001/movies?searchQuery=${searchedCity}`
+      const url = `${process.env.REACT_APP_SERVER_URL}/movies?searchQuery=${searchedCity}`
       const response = await axios.get(url);
       this.setState({ moviesObj: response.data, loading: { ...this.state.loading, movies: false } });
       // this.setState({ error: '' })
