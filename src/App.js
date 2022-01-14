@@ -27,10 +27,11 @@ class App extends React.Component {
       this.setState({ loading: { ...this.state.loading, location: true } });
       const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${searchedCity}&format=json`;
       const response = await axios.get(url);
-      this.setState({ locationObj: response.data, loading: { ...this.state.loading, location: false } });
+      this.setState({ locationObj: response.data });
+      this.setState({ loading: { ...this.state.loading, location: false } })
       this.setState({ error: '' })
     } catch (err) {
-      this.setState({ error: err.response.status + ': ' + err.response.data.error });
+      this.handleError(err);
     }
   }
 
@@ -39,10 +40,10 @@ class App extends React.Component {
       this.setState({ loading: { ...this.state.loading, forecast: true } });
       const url = `${process.env.REACT_APP_SERVER_URL}/weather?lat=${locationObj.lat}&lon=${locationObj.lon}&searchQuery=${searchedCity}`;
       const response = await axios.get(url);
-      this.setState({ weatherObj: [...this.state.weatherObj, ...response.data], loading: { ...this.state.loading, forecast: false } });
-      // this.setState({ error: '' })
+      this.setState({ weatherObj: [...this.state.weatherObj, ...response.data] });
+      this.setState({ loading: { ...this.state.loading, forecast: false } })
     } catch (err) {
-      this.setState({ error: err.response.status + ': ' + err.response.data.error });
+      this.handleError(err);
     }
   }
 
@@ -51,15 +52,16 @@ class App extends React.Component {
       this.setState({ loading: { ...this.state.loading, movies: true } });
       const url = `${process.env.REACT_APP_SERVER_URL}/movies?searchQuery=${searchedCity}`
       const response = await axios.get(url);
-      this.setState({ moviesObj: response.data, loading: { ...this.state.loading, movies: false } });
-      // this.setState({ error: '' })
-      console.log(this.state.moviesObj);
+      this.setState({ moviesObj: response.data });
+      this.setState({ loading: { ...this.state.loading, movies: false } })
     } catch (err) {
-      this.setState({ error: err.response.status + ': ' + err.response.data.error });
+      this.handleError(err);
     }
   }
 
   clearWeatherObj = () => this.setState({ weatherObj: [] });
+
+  handleError = (err) => this.setState({ error: err.response.status + ': ' + err.response.data.error });
 
   render() {
     const appStyle = {
@@ -80,8 +82,6 @@ class App extends React.Component {
         {(!this.state.error && this.state.locationObj.length > 0) &&
           <Results locationObj={this.state.locationObj} weatherObj={this.state.weatherObj} moviesObj={this.state.moviesObj} loading={this.state.loading} />}
       </Container>
-
-
     );
   }
 }
